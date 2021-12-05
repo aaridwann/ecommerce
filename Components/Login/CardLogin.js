@@ -1,10 +1,10 @@
 import React from "react";
 
-export default function cardLogin(props) {
+export default function CardLogin(props) {
   return (
     <div>
-      <div className="card bg-center image-full h-1/4 w-1/2 mx-auto overflow-hidden shadow-2xl">
-        <figure className="overflow-hidden  bg-center ">
+      <div className="card bg-center image-full h-1/4 w-1/2 mx-auto overflow-hidden">
+        <figure className="overflow-hidden bg-center">
           <img
             alt="default"
             className="bg-center"

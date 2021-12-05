@@ -1,19 +1,40 @@
-import React from "react";
 import Link from 'next/Link'
+import React, { useContext, useState, useEffect } from 'react'
+import { AuthContext } from '../Auth/auth';
+import {useRouter} from 'next/router'
 
 export default function Navbar() {
+  const router = useRouter()
+const {Auth, setAuth} = useContext(AuthContext)
+
+const logout = () => {
+  sessionStorage.clear()
+  setAuth({
+    user:'',
+    token:''
+  })
+  router.push('/login')
+}
+
   return (
     <div>
       <div className="navbar mb-2 shadow-lg bg-neutral text-neutral-content rounded-box">
         <div className="px-2 mx-2 navbar-start">
-          <span className="text-lg font-bold">daisyUI</span>
+          <span className="text-lg font-bold">{Auth.user ? Auth.user.name : 'Ecommerce Example'}</span>
         </div>
         <div className="hidden px-2 mx-2 navbar-center lg:flex">
           <div className="flex items-stretch">
             <Link href="/"><a className="btn btn-ghost btn-sm rounded-btn">Home</a></Link>
-            <Link href="/profile"><a className="btn btn-ghost btn-sm rounded-btn">Profile</a></Link>
             <Link href="/products"><a className="btn btn-ghost btn-sm rounded-btn">Products</a></Link>
+            {Auth.user && 
+            <Link href="/profile"><a className="btn btn-ghost btn-sm rounded-btn">Profile</a></Link>
+            }
+
+            {Auth.user ? 
+            <button onClick={logout} className="btn btn-ghost btn-sm rounded-btn">Logout</button>
+            :
             <Link href="/login"><a className="btn btn-ghost btn-sm rounded-btn">Login</a></Link>
+            }
           </div>
         </div>
         <div className="navbar-end">
