@@ -12,7 +12,7 @@ export default function cardProfile(props) {
       <div className="card lg:card-side border-2 border-gray-200 shadow-2xl">
         <figure>
           {/* <img className="w-60" alt="" src="pexels-photo-10004698.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=150&w=1260" /> */}
-          <Image alt="heheh" loader={myLoader} width={300} src="pexels-photo-10004698.jpeg" height={400} />
+          <Image className=" sm:rounded-tr-full sm:rounded-br-full" alt="heheh" loader={myLoader} width={300} src="pexels-photo-10004698.jpeg" height={400} />
         </figure>
         <div className="card-body">
           <h2 className="card-title font-semibold text-2xl">{props.name}</h2>
@@ -22,11 +22,11 @@ export default function cardProfile(props) {
             sapiente.
           </p>
           <div className="card-actions">
-            <button onClick={props.cartModal} className="btn btn-primary">Your Cart have {props.cart} items</button>
+            <button onClick={props.cartModal} className="btn lg:btn-md sm:btn-sm btn-primary">Your Cart have {props.cart} items</button>
             <button className="btn btn-ghost">{props.email}</button>
           </div>
-          <div className=" flex flex-row w-full gap-8 mx-auto mt-4 text-2xl font-bold text-gray-700">
-              <div className="flex-col items-center justify-center bg-gray-300 rounded-xl p-4 text-center">
+          <div className=" flex flex-row w-full gap-8 mx-auto mt-4 lg:text-2xl sm:text-lg font-bold text-gray-700">
+              <div className="flex-col items-center justify-center bg-gray-300 rounded-xl flex px-4 text-center">
               <h1>Followers</h1>
               <p>1.5M</p>
               </div>

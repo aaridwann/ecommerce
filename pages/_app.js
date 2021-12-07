@@ -10,11 +10,10 @@ function MyApp({ Component, pageProps }) {
   })
 
 useEffect(() => { 
-  if(window !== 'undifined'){
     setAuth({user : JSON.parse(sessionStorage.getItem('user')),
     token : sessionStorage.getItem('token')
     })
-  }
+  
 },[])
 
   return (

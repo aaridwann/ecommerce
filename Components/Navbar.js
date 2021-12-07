@@ -1,5 +1,5 @@
 import Link from 'next/Link'
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext} from 'react'
 import { AuthContext } from '../Auth/auth';
 import {useRouter} from 'next/router'
 
@@ -15,17 +15,17 @@ const logout = () => {
   })
   router.push('/login')
 }
-
+// console.log(Auth.token)
   return (
     <div>
       <div className="navbar mb-2 shadow-lg bg-neutral text-neutral-content rounded-box">
         <div className="px-2 mx-2 navbar-start">
           <span className="text-lg font-bold">{Auth.user ? Auth.user.name : 'Ecommerce Example'}</span>
         </div>
-        <div className="hidden px-2 mx-2 navbar-center lg:flex">
+        <div className=" px-2 mx-2 navbar-center lg:flex">
           <div className="flex items-stretch">
             <Link href="/"><a className="btn btn-ghost btn-sm rounded-btn">Home</a></Link>
-            <Link href="/products"><a className="btn btn-ghost btn-sm rounded-btn">Products</a></Link>
+            <Link href="/Products"><a className="btn btn-ghost btn-sm rounded-btn">Products</a></Link>
             {Auth.user && 
             <Link href="/profile"><a className="btn btn-ghost btn-sm rounded-btn">Profile</a></Link>
             }
