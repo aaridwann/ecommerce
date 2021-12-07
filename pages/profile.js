@@ -65,14 +65,28 @@ export default function Profile() {
         getUser()
     },[])
     const userDetail = (a) => {
-        console.log(a)
         router.push('/Profile/'+ a )
     }
+
+    const follow = async (a) => {
+        const following = Auth.user.following.filter((x) => x==a)
+        if(following){
+            return(<button className="btn btn-success">unFollow</button>)
+        }
+        console.log(following)
+        // const response = await axios.post(`http://localhost:3002/follow/${Auth.user._id}`,{"id":a})
+        // console.log(response)
+
+
+    }
+        console.log(Auth.user.length)
     return (
         <Layout>
             {modal && <CartModal item={item()} close={() => setModal(!modal)} />}
             <div className=" container w-3/4 mx-auto mt-10">
             {Auth.user ? <CardProfile
+                    followers={Auth.user.followers.length}
+                    following={Auth.user.following.length}
                     cartModal={cartModal}
                     name={Auth.user.name}
                     cart={cart ? cart.length : "0"}
@@ -82,11 +96,11 @@ export default function Profile() {
             </div>
                 {user ? 
                 <div className="container mx-auto mt-10 flex flex-col gap-8 items-center justify-center">
-                    <h1 className=" text-3xl font-semibold ">Explore User</h1>
-                    <div className="container mx-auto ">
-                        <div className="flex flex-row flex-wrap mx-auto items-center justify-around gap-8 ">
+                    <div className="container mx-auto overflow-x-scroll border-2 border-gray-200 rounded-3xl shadow-2xl ">
+                    <h1 className=" text-3xl font-bold text-gray-600 text-center mt-4 ">Explore User</h1>
+                        <div className="inline-flex gap-8 p-8">
                         {user.map((a) => (
-                            <CardUser key={a._id} name={a.name} onClick={() => userDetail(a._id)} />
+                            <CardUser follow={(e) => follow(a._id)} testfollow={'unfollow'} key={a._id} name={a.name} onClick={() => userDetail(a._id)} />
                         ))}
                         </div>
                     </div>

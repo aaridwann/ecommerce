@@ -28,11 +28,11 @@ export default function cardProfile(props) {
           <div className=" flex flex-row w-full gap-8 mx-auto mt-4 lg:text-2xl sm:text-lg font-bold text-gray-700">
               <div className="flex-col items-center justify-center bg-gray-300 rounded-xl flex px-4 text-center">
               <h1>Followers</h1>
-              <p>1.5M</p>
+              <p>{props.followers}</p>
               </div>
               <div className="flex-col items-center justify-center bg-gray-300 rounded-xl p-4 text-center">
               <h1>Following</h1>
-              <p>679</p>
+              <p>{props.following}</p>
               </div>
               
           </div>
