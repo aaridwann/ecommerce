@@ -120,7 +120,7 @@ export default function Profile() {
                                     <img className="rounded-full w-14 h-14" src="http://daisyui.com/tailwind-css-component-profile-1@56w.png" />
                                 </div>
                                 <h1 className=" text-gray-500 text-2xls font-bold text-center">{a.name}</h1>
-                        {testfollow(a._id)}
+                                {testfollow(a._id)}
                                 {/* <button onClick={() => unFollow(a._id).then(() => seeFollowing(Auth.user.following))} className=" justify-self-end btn btn-sm btn-outline btn-primary">Unfollow</button> */}
                             </div>
                         </div>)}
@@ -142,7 +142,7 @@ export default function Profile() {
                                     <img className="rounded-full w-14 h-14" src="http://daisyui.com/tailwind-css-component-profile-1@56w.png" />
                                 </div>
                                 <h1 className=" text-gray-500 text-2xls font-bold text-center">{a.name}</h1>
-                        {testfollow(a._id)}
+                                {testfollow(a._id)}
                                 {/* <button onClick={() => unFollow(a._id).then(() => seeFollowing(Auth.user.following))} className=" justify-self-end btn btn-sm btn-outline btn-primary">Unfollow</button> */}
                             </div>
                         </div>)}
@@ -152,7 +152,6 @@ export default function Profile() {
 
             .then(result => { return setSeeFollow({ state: 'seeFollowing', follow: result }) })
     }
-
 
     return (
         <Layout>
@@ -179,7 +178,7 @@ export default function Profile() {
             {/* End Card Profile  */}
 
             {/* Card Explore User  */}
-            {user ?
+            {Auth.user ?
                 <div className="container mx-auto mt-10 flex flex-col gap-8 items-center justify-center">
                     <div className="container mx-auto overflow-x-scroll border-2 border-gray-200 rounded-3xl shadow-2xl ">
                         <h1 className=" text-3xl font-bold text-gray-600 text-center mt-4 ">Explore User</h1>
@@ -197,8 +196,8 @@ export default function Profile() {
             {/* See Followers && Following */}
             {/* <ModalFollow/> */}
             {seeFollow.state == 'seeFollowing' ? <ModalFollow item={seeFollow.follow} close={() => setSeeFollow({ state: '' })} /> :
-            seeFollow.state == 'seeFollowers' ? <ModalFollow item={seeFollow.follow} close={() => setSeeFollow({ state: '' })} /> 
-            :''
+            seeFollow.state == 'seeFollowers' ? <ModalFollow item={seeFollow.follow} close={() => setSeeFollow({ state: '' })} />
+                    : ''
             }
             {/* END See Followers && Following  */}
 
