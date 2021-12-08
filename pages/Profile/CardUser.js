@@ -4,7 +4,7 @@ import { AuthContext } from '../../Auth/auth'
 export default function CardUser(props) {
     const {Auth,setAuth} = useContext(AuthContext)
     return (
-        <div className="card shadow-2xl border-2 border-gray-200 w-80 ">
+        <div className="card shadow-2xl border-2 border-gray-200 w-80">
             <div className="card-body ">
                 <div className="avatar flex flex-row items-center justify-around gap-4 ">
                     <div className="mb-8 rounded-full w-24 h-24 ring ring-primary ring-offset-base-100 ring-offset-2 ">
@@ -12,7 +12,7 @@ export default function CardUser(props) {
                     </div>
                   <h1 onClick={props.onClick} className="text-lg font-bold text-gray-600">{props.name}</h1>
                 </div>
-                <h2 classNameName="card-title">{props.notifFollow}</h2>
+                <h2 className="card-title">{props.notifFollow}</h2>
                 <p>Rerum reiciendis beatae tenetur excepturi</p>
                 <div className="flex flex-row gap-2 justify-around">
                         {props.follow}

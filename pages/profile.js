@@ -8,13 +8,15 @@ import Link from "next/Link";
 import CardUser from "./Profile/CardUser";
 import { useRouter } from "next/router";
 import ModalFollow from "../Components/profile/ModalFollow";
+import CardProducts from "../Components/Products/CardProducts";
 
 export default function Profile() {
     const router = useRouter()
-    const [seeFollow, setSeeFollow] = useState({ state: '', follow: '' })
+    const [seeFollow, setSeeFollow] = useState({state: '', follow: ''})
     const { Auth, setAuth } = useContext(AuthContext);
     let [modal, setModal] = useState(false);
     let [user, setUser] = useState()
+    let [products, setProducts] = useState()
     if (Auth.user) {
         const { name, email, cart, _id } = Auth.user;
         const item = () => {
@@ -54,7 +56,7 @@ export default function Profile() {
             console.log(error)
         }
     }
-    const getUser = async () => {
+    const getUser = async (a) => {
         try {
             await axios.get('http://localhost:3002/user')
                 .then(res => { return res.data })
@@ -65,7 +67,9 @@ export default function Profile() {
     }
     useEffect(() => {
         getUser()
-    }, [])
+        getProducts()
+    },[])
+    
     const userDetail = (a) => {
         router.push('/Profile/' + a)
     }
@@ -152,7 +156,18 @@ export default function Profile() {
 
             .then(result => { return setSeeFollow({ state: 'seeFollowing', follow: result }) })
     }
-
+    const getProducts = async () => {
+        try {
+           await axios.get(`http://localhost:3002/products/user/${Auth.user._id}`, {
+                headers: {Authorization: `bearer ${Auth.token}`}
+            })
+            .then(res => { return  (setProducts(res.data)) })
+            // console.log(response)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    console.log(Auth.user)
     return (
         <Layout>
 
@@ -160,9 +175,8 @@ export default function Profile() {
             {modal && <CartModal item={item()} close={() => setModal(!modal)} />}
             {/* END Modal Cart */}
 
-
             {/* Card Profile */}
-            <div className=" container w-3/4 mx-auto mt-10">
+            <div className="container w-3/4 mx-auto mt-10">
                 {Auth.user ? <CardProfile
                     clickFollowing={() => seeFollowing(Auth.user.following)}
                     clickFollowers={() => seeFollowers(Auth.user.followers)}
@@ -177,11 +191,28 @@ export default function Profile() {
             </div>
             {/* End Card Profile  */}
 
+            {/* My Product */}
+            <div className=" content-around mt-4 mx-auto justify-between p-4 ">
+                {products ?
+                    <div className=" border-2 border-gray-200 shadow-2xl flex items-center overflow-x-scroll bg-white gap-4 p-8 rounded-3xl">
+                        <h1 className=" text-2xl mb-4 text-left font-bold text-gray-700">My Products</h1>
+                        <>
+                            {products.map((a) => (
+                                <CardProducts key={a._id} name={a.name} img={a.img} price={a.price} />
+                            ))}</>
+                    </div>
+                    : <h1 className="text-center text-4xl font-bold text-gray-500">Loading...</h1>}
+            </div>
+            {/* END MY PRODUCT */}
+
+
+
+
             {/* Card Explore User  */}
             {user ?
-                <div className="container mx-auto mt-10 flex flex-col gap-8 items-center justify-center">
+                <div className="container mx-auto mt-10 flex flex-col gap-8 items-center justify-center ">
                     <div className="container mx-auto overflow-x-scroll border-2 border-gray-200 rounded-3xl shadow-2xl ">
-                        <h1 className=" text-3xl font-bold text-gray-600 text-center mt-4 ">Explore User</h1>
+                        <h1 className="text-3xl font-bold text-gray-600 text-center mt-4 ">Explore User</h1>
                         <div className="inline-flex gap-8 p-8">
                             {user.map((a) => (
                                 <CardUser follow={testfollow(a._id)} notifFollow={notifFollow(a._id)}
@@ -190,15 +221,14 @@ export default function Profile() {
                         </div>
                     </div>
                 </div>
-                : <h1 className="text-center mt-20 text-3xl text-gray-600">Loading...</h1>
-            }
+                : <h1 className="text-center mt-20 text-3xl text-gray-600">Loading...</h1>}
             {/* End Card User */}
+
             {/* See Followers && Following */}
             {/* <ModalFollow/> */}
             {seeFollow.state == 'seeFollowing' ? <ModalFollow item={seeFollow.follow} close={() => setSeeFollow({ state: '' })} /> :
-            seeFollow.state == 'seeFollowers' ? <ModalFollow item={seeFollow.follow} close={() => setSeeFollow({ state: '' })} />
-                    : ''
-            }
+                seeFollow.state == 'seeFollowers' ? <ModalFollow item={seeFollow.follow} close={() => setSeeFollow({ state: '' })} />
+                    : ''}
             {/* END See Followers && Following  */}
 
         </Layout>

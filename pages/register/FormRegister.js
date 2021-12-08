@@ -20,7 +20,7 @@ export default function FormRegister() {
 
     return (
         <div>
-            <div className="p-10 card bg-base-200 border-gray-200 border-2 shadow-2xl  ">
+            <div className="p-10 card bg-base-500 border-gray-200 border-2 shadow-2xl  ">
                 <h1 className="text-center font-bold mb-8 text-gray-500">Registration Form</h1>
                 <form onSubmit={submit} className="form-control">
                     <label className="label">

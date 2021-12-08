@@ -8,6 +8,7 @@ import Link from 'next/Link';
 import CartModal from '../../Components/Modal/CartModal/CartModal';
 
 export default function Products() {
+    let [products, setProducts] = useState()
     const router = useRouter()
     const {Auth, setAuth} = useContext(AuthContext)
     const [detailModal, setDetailModal] =  useState(false)
@@ -15,7 +16,7 @@ export default function Products() {
         const {name,email,_id,cart} = Auth.user
     }
    
-    let [products, setProducts] = useState()
+    
 
     let getProducts = async () =>{
         try {
@@ -52,7 +53,6 @@ export default function Products() {
     useEffect(() => {
         getProducts()
     },[])
-    console.log(Auth)
     return (
         <Layout>
         <div className="container mx-auto p-4">

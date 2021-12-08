@@ -38,7 +38,7 @@ export default function Login() {
    
     return (
         <Layout>
-            <div className="container w-3/4 mx-auto mt-40">
+            <div className="container w-3/4 mx-auto mt-20">
             <CardLogin name={data} password={data} onSubmit={submit}/>
             </div>
 

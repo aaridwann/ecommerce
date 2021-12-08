@@ -7,7 +7,7 @@ export default function Index() {
 
   return (
       <Layout>
-        <h1>home</h1>
+        <h1 className="text-center">Home</h1>
        
       </Layout>
       

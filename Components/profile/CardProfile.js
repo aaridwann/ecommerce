@@ -9,7 +9,7 @@ export default function cardProfile(props) {
 
   return (
     <div>
-      <div className="card lg:card-side border-2 border-gray-200 shadow-2xl">
+      <div className="card flex items-center lg:card-side border-2 border-gray-200 shadow-2xl">
         <figure>
           {/* <img className="w-60" alt="" src="pexels-photo-10004698.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=150&w=1260" /> */}
           <Image className=" sm:rounded-tr-full sm:rounded-br-full" alt="heheh" loader={myLoader} width={300} src="pexels-photo-10004698.jpeg" height={400} />
