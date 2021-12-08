@@ -1,6 +1,8 @@
 import React from "react";
+import { useRouter } from "next/router";
 
 export default function CardLogin(props) {
+  const router = useRouter();
   return (
     <div>
       <div className="card bg-center image-full h-1/4 w-1/2 mx-auto overflow-hidden">
@@ -55,7 +57,7 @@ export default function CardLogin(props) {
           </div>
 
           <div className="card-actions">
-            <button className="btn btn-md btn-info">Register</button>
+            <button onClick={() => router.push('/register')} className="btn btn-md btn-info">Register</button>
           </div>
         </div>
       </div>

@@ -178,7 +178,7 @@ export default function Profile() {
             {/* End Card Profile  */}
 
             {/* Card Explore User  */}
-            {Auth.user ?
+            {user ?
                 <div className="container mx-auto mt-10 flex flex-col gap-8 items-center justify-center">
                     <div className="container mx-auto overflow-x-scroll border-2 border-gray-200 rounded-3xl shadow-2xl ">
                         <h1 className=" text-3xl font-bold text-gray-600 text-center mt-4 ">Explore User</h1>
