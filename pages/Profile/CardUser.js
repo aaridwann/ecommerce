@@ -3,7 +3,6 @@ import { AuthContext } from '../../Auth/auth'
 
 export default function CardUser(props) {
     const {Auth,setAuth} = useContext(AuthContext)
-    console.log(Auth.user.following)
     return (
         <div className="card shadow-2xl border-2 border-gray-200 w-80 ">
             <div className="card-body ">
@@ -13,10 +12,10 @@ export default function CardUser(props) {
                     </div>
                   <h1 onClick={props.onClick} className="text-lg font-bold text-gray-600">{props.name}</h1>
                 </div>
-                <h2 classNameName="card-title">no border with shadow</h2>
+                <h2 classNameName="card-title">{props.notifFollow}</h2>
                 <p>Rerum reiciendis beatae tenetur excepturi</p>
                 <div className="flex flex-row gap-2 justify-around">
-                        <button onClick={props.follow} className="btn btn-md btn-info mt-4">{props.testfollow}</button>
+                        {props.follow}
                         <button className="btn btn-md btn-outline  btn-success mt-4">Mesasge</button>
                 </div>
             </div>

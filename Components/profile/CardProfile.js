@@ -26,13 +26,13 @@ export default function cardProfile(props) {
             <button className="btn btn-ghost">{props.email}</button>
           </div>
           <div className=" flex flex-row w-full gap-8 mx-auto mt-4 lg:text-2xl sm:text-lg font-bold text-gray-700">
-              <div className="flex-col items-center justify-center bg-gray-300 rounded-xl flex px-4 text-center">
-              <h1>Followers</h1>
+              <div onClick={props.clickFollowers}  className="flex-col btn btn-lg btn-info items-center justify-center rounded-xl flex px-4 text-center">
               <p>{props.followers}</p>
+              <h1>Followers</h1>
               </div>
-              <div className="flex-col items-center justify-center bg-gray-300 rounded-xl p-4 text-center">
-              <h1>Following</h1>
+              <div onClick={props.clickFollowing} className="flex-col btn btn-lg btn-info items-center justify-center rounded-xl flex px-4 text-center">
               <p>{props.following}</p>
+              <h1>Following</h1>
               </div>
               
           </div>

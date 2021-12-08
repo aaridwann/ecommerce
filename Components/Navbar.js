@@ -15,7 +15,6 @@ const logout = () => {
   })
   router.push('/login')
 }
-// console.log(Auth.token)
   return (
     <div>
       <div className="navbar mb-2 shadow-lg bg-neutral text-neutral-content rounded-box">
