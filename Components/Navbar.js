@@ -17,7 +17,7 @@ const logout = () => {
 }
   return (
     <div>
-      <div className="navbar mb-2 shadow-lg bg-neutral text-neutral-content rounded-box">
+      <div className="navbar mb-2 shadow-lg bg-blue-300  text-neutral-content rounded-box">
         <div className="px-2 mx-2 navbar-start">
           <span className="text-lg font-bold">{Auth.user ? Auth.user.name : 'Ecommerce Example'}</span>
         </div>

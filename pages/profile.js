@@ -9,11 +9,23 @@ import CardUser from "./Profile/CardUser";
 import { useRouter } from "next/router";
 import ModalFollow from "../Components/profile/ModalFollow";
 import CardProducts from "../Components/Products/CardProducts";
+import AddProducts from "./Products/AddProducts";
+import ProductsDetail from "./Profile/ProductsDetail";
 
 export default function Profile() {
     const router = useRouter()
-    const [seeFollow, setSeeFollow] = useState({state: '', follow: ''})
+    const [edit, setEdit] = useState({
+        // name:'',price:'',category:'',
+        state: false,
+        data: ''
+    })
+    const [modalDetail, setModalDetail] = useState({
+        state: false,
+        data: ''
+    })
+    const [seeFollow, setSeeFollow] = useState({ state: '', follow: '' })
     const { Auth, setAuth } = useContext(AuthContext);
+    let [addProducts, setAddProducts] = useState(false)
     let [modal, setModal] = useState(false);
     let [user, setUser] = useState()
     let [products, setProducts] = useState()
@@ -68,8 +80,8 @@ export default function Profile() {
     useEffect(() => {
         getUser()
         getProducts()
-    },[])
-    
+    }, [])
+
     const userDetail = (a) => {
         router.push('/Profile/' + a)
     }
@@ -158,19 +170,51 @@ export default function Profile() {
     }
     const getProducts = async () => {
         try {
-           await axios.get(`http://localhost:3002/products/user/${Auth.user._id}`, {
-                headers: {Authorization: `bearer ${Auth.token}`}
+            await axios.get(`http://localhost:3002/products/user/${Auth.user._id}`, {
+                headers: { Authorization: `bearer ${Auth.token}` }
             })
-            .then(res => { return  (setProducts(res.data)) })
+                .then(res => { return (setProducts(res.data)) })
             // console.log(response)
         } catch (error) {
             console.log(error)
         }
     }
-    console.log(Auth.user)
+    let [StateEdit, setStateEdit] = useState(false)
+    const editProduct = (e) => {
+        setStateEdit(!StateEdit)
+    }
+    let editName = (e) => {
+        setEdit({...edit,[e.target.name]: e.target.value})
+    }
+   
+    let Save = async () => {
+        let {name,price,quantity,description,category} = edit
+        let id = edit.data._id
+        const body = {name : name, price:price,description:description,category:category, quantity:quantity}
+        try {
+            let response = await axios.patch(`http://localhost:3002/products/${id}`,body)
+            console.log(response)
+            const user = await axios.get(`http://localhost:3002/user/${_id}`)
+            setAuth({
+                user: user.data,
+                token: Auth.token
+            })
+            sessionStorage.setItem('user', JSON.stringify(user.data)),
+            sessionStorage.setItem('token', Auth.token)
+            setEdit({state:true ,data:body})
+            // router.push('/')
+            // setEdit({state:false})
+        } catch (error) {
+            console.log(error)
+        }
+      
+
+    }
+    
+
     return (
         <Layout>
-
+            {modalDetail.state ? modalDetail.data : ''}
             {/* Modal Cart */}
             {modal && <CartModal item={item()} close={() => setModal(!modal)} />}
             {/* END Modal Cart */}
@@ -191,22 +235,32 @@ export default function Profile() {
             </div>
             {/* End Card Profile  */}
 
+            {/* PRODUCT DETAIL */}
+            {edit.state && <ProductsDetail submit={Save} editProduct={editProduct} close={() => setEdit({state:false})} 
+            quantity={StateEdit ? <input onChange={editName} name="quantity" type="number" className="text-gray-400 w-3/4 text-center "/> : edit.data.quantity} img={edit.data.img} name={StateEdit ? <input onChange={editName} name="name" type="text" className="text-gray-400 w-3/4 "/> : edit.data.name} 
+            price={StateEdit ? <input onChange={editName} name="price" type="text" className="text-gray-400 w-3/4 text-center "/> :edit.data.price} category={StateEdit ? <input onChange={editName} name="category" type="text" className="text-gray-400 w-3/4 text-center "/> :edit.data.category} 
+            description={StateEdit ? <input onChange={editName} name="description" type="text" className="text-gray-400 w-3/4 text-center "/> :edit.data.description} />}
+            {/* END PRODUCT DETAIL */}
+
+
             {/* My Product */}
             <div className=" content-around mt-4 mx-auto justify-between p-4 ">
                 {products ?
                     <div className=" border-2 border-gray-200 shadow-2xl flex items-center overflow-x-scroll bg-white gap-4 p-8 rounded-3xl">
-                        <h1 className=" text-2xl mb-4 text-left font-bold text-gray-700">My Products</h1>
+                            <h1 className=" text-2xl mb-4 text-left font-bold text-gray-500">My Products</h1>
+                            <button onClick={() => setAddProducts(!addProducts)} className="btn btn-md text-left btn-outline btn-primary">Add Product</button>
                         <>
                             {products.map((a) => (
-                                <CardProducts key={a._id} name={a.name} img={a.img} price={a.price} />
+                                <CardProducts key={a._id} name={a.name} img={a.img} price={a.price} clickDetail={() => setEdit({state:true,data:a})} />
                             ))}</>
                     </div>
                     : <h1 className="text-center text-4xl font-bold text-gray-500">Loading...</h1>}
             </div>
             {/* END MY PRODUCT */}
 
-
-
+            {/* Add Products */}
+            {addProducts && <AddProducts close={() => setAddProducts(!addProducts)} />}
+            {/* End ADD PRODUCTS */}
 
             {/* Card Explore User  */}
             {user ?
@@ -225,7 +279,6 @@ export default function Profile() {
             {/* End Card User */}
 
             {/* See Followers && Following */}
-            {/* <ModalFollow/> */}
             {seeFollow.state == 'seeFollowing' ? <ModalFollow item={seeFollow.follow} close={() => setSeeFollow({ state: '' })} /> :
                 seeFollow.state == 'seeFollowers' ? <ModalFollow item={seeFollow.follow} close={() => setSeeFollow({ state: '' })} />
                     : ''}

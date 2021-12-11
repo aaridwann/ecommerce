@@ -18,7 +18,7 @@ useEffect(() => {
 
   return (
     <AuthContext.Provider value={{Auth, setAuth}}>
-      <div className=" mx-auto bg-gray-100 h-screen w-screen">
+      <div className="mx-auto bg-gray-100 h-screen w-screen">
         <Component {...pageProps} />
       </div>
     </AuthContext.Provider>
