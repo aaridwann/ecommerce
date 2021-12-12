@@ -80,7 +80,7 @@ export default function Profile() {
     useEffect(() => {
         getUser()
         getProducts()
-    }, [])
+    }, [Auth])
 
     const userDetail = (a) => {
         router.push('/Profile/' + a)
@@ -170,11 +170,10 @@ export default function Profile() {
     }
     const getProducts = async () => {
         try {
-            await axios.get(`http://localhost:3002/products/user/${Auth.user._id}`, {
+            await axios.get(`http://localhost:3002/products/user/${_id}`, {
                 headers: { Authorization: `bearer ${Auth.token}` }
             })
                 .then(res => { return (setProducts(res.data)) })
-            // console.log(response)
         } catch (error) {
             console.log(error)
         }
@@ -210,7 +209,7 @@ export default function Profile() {
       
 
     }
-    
+    console.log(Auth)
 
     return (
         <Layout>
@@ -237,7 +236,7 @@ export default function Profile() {
 
             {/* PRODUCT DETAIL */}
             {edit.state && <ProductsDetail submit={Save} editProduct={editProduct} close={() => setEdit({state:false})} 
-            quantity={StateEdit ? <input onChange={editName} name="quantity" type="number" className="text-gray-400 w-3/4 text-center "/> : edit.data.quantity} img={edit.data.img} name={StateEdit ? <input onChange={editName} name="name" type="text" className="text-gray-400 w-3/4 "/> : edit.data.name} 
+            quantity={StateEdit ? <input onChange={editName} name="quantity" type="number" className="text-gray-400 w-3/4 text-center "/> : edit.data.quantity} img={edit.data.img} name={StateEdit ? <input placeholder={edit.data.name} onChange={editName} name="name" type="text" className="text-gray-400 w-3/4 "/> : edit.data.name} 
             price={StateEdit ? <input onChange={editName} name="price" type="text" className="text-gray-400 w-3/4 text-center "/> :edit.data.price} category={StateEdit ? <input onChange={editName} name="category" type="text" className="text-gray-400 w-3/4 text-center "/> :edit.data.category} 
             description={StateEdit ? <input onChange={editName} name="description" type="text" className="text-gray-400 w-3/4 text-center "/> :edit.data.description} />}
             {/* END PRODUCT DETAIL */}
@@ -280,7 +279,7 @@ export default function Profile() {
 
             {/* See Followers && Following */}
             {seeFollow.state == 'seeFollowing' ? <ModalFollow item={seeFollow.follow} close={() => setSeeFollow({ state: '' })} /> :
-                seeFollow.state == 'seeFollowers' ? <ModalFollow item={seeFollow.follow} close={() => setSeeFollow({ state: '' })} />
+            seeFollow.state == 'seeFollowers' ? <ModalFollow item={seeFollow.follow} close={() => setSeeFollow({ state: '' })} />
                     : ''}
             {/* END See Followers && Following  */}
 
